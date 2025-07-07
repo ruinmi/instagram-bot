@@ -20,3 +20,11 @@ def to_base36(num: int) -> str:
 def get_tab_id():
     a = to_base36(math.floor(random.random() * 2176782336))
     return "0" * (6 - len(a)) + a
+
+def get_cookies():
+    with open('cookies.txt', 'r') as f:
+        cookies = f.readline()
+        for cookie in cookies.split(';'):
+            k, v = cookie.strip().split('=')
+            if k == 'csrftoken':
+                return cookies, v

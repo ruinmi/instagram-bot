@@ -4,21 +4,19 @@ import time
 
 import requests
 
-from utils import to_base36, get_tab_id
+from utils import to_base36, get_tab_id, get_cookies
 
 
 class InstagramBot:
-    def __init__(self, username, csrf_token: str, app_id: str):
-        with open("cookies.txt", "r") as f:
-            cookies = f.readline()
-        # 请求头（需要使用正确的 user-agent 和 cookie 等）
+    def __init__(self, username):
+        cookies, csrftoken = get_cookies()
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
             "Referer": f"https://www.instagram.com/{username}/",
             "Cookie": cookies,  # 需要加上你自己的 cookie
-            "x-csrftoken": csrf_token,
+            "x-csrftoken": csrftoken,
         }
-        self.app_id = app_id
+        self.app_id = '936619743392459'
         self.username = username
         self.headers = headers
         self.session = requests.Session()
@@ -168,12 +166,9 @@ class InstagramBot:
             print('----------------------')    
             
 if __name__ == '__main__':
-    token = ''
-    appid = ''
-    
-    # bot = InstagramBot("stefsunyanzi", token, appid)
-    # bot = InstagramBot("jonahfooddaddy", token, appid)
-    bot = InstagramBot("janice_students_work", token, appid)
+    bot = InstagramBot("stefsunyanzi")
+    # bot = InstagramBot("jonahfooddaddy")
+    # bot = InstagramBot("janice_students_work")
     
     bot.get_posts()
     # bot.fetch_all_posts()
